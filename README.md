@@ -1,2 +1,2 @@
 # Seeker
-this is a tourism web 
+this is a tourism web  app
