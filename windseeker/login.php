@@ -24,22 +24,22 @@
     </header>
    
 
-<form class="inputForm">
+<form class="inputForm" action="../windseeker/BackendCode/userlogin.php" method="post">
     <div class="loginHeader">Login</div>
 
     <div class="inputDiv">
     <label for="email">Email</label><br/>
-    <input type="email" placeholder="email" />
+    <input type="email" name= "email" placeholder="email" />
     </div>
 
     <div class="inputDiv">
         <label for="password">password</label><br/>
-        <input type="passwsord" />
+        <input type="passwsord"   name="password"/>
     </div>
 
-    <button>submit</button>
+    <button >submit</button>
 
-    <div class="noAccount">don't have an account? <a href="signup.html" style="text-decoration: none; color: orangered;"><span> signup</span></a></div>
+    <div class="noAccount">don't have an account? <a href="signup.php" style="text-decoration: none; color: orangered;"><span> signup</span></a></div>
 </form>
  </div>
  <div class="loginImage">
