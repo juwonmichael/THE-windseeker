@@ -95,6 +95,24 @@
     bottom: 1%;
     right: 5%;
 }
+.about{
+background-color: rgba(0, 195, 255, 0.384);
+text-align: center;
+
+}
+footer{
+    display: flex;
+    margin-top: 20%;
+}
+span{
+    margin-bottom: 10%;
+
+
+
+
+}
+
+
 
 /* mobile design of the index page */
 @media only screen and (max-width: 1100px) {

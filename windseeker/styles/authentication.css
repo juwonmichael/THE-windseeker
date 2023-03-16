@@ -1,0 +1,136 @@
+*{
+    margin: 0 0;
+    padding: 0 0;
+    font-family: 'Nunito';
+}
+
+.loginContainer{
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.inputSection{
+    padding: 10% 0 0 10%;
+}
+
+.inputSection header{
+    font-size: 18px;
+    font-weight: 800;
+    color: orangered;
+    padding: 0 0 0 0;
+    display: flex;
+    z-index: 200;
+    flex-direction: row;
+    cursor: pointer;
+}
+
+header img{
+    transform: translateY(-25%);
+    margin: 0 5px 0 0;
+}
+
+.loginImage{
+    display: block;
+    background-image: url('../images/loginImage.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.signupImage{
+    display: block;
+    background-image: url('../images/signup2.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.inputForm{
+    margin: 15% auto 0 auto;
+    width: 60%;
+}
+
+.loginHeader{
+    font-size: 25px;
+    font-weight: 800;
+    text-align: center;
+    margin: 0 0 5% 0;
+}
+
+.inputDiv{
+    margin: 0 0 5% 0;
+}
+
+.inputForm label{
+    font-size: 16px;
+    font-weight: 800;
+    text-align: left;
+    width: 100%;
+}
+
+.inputForm input{
+    width: 97%;
+    height: 50px;
+    border-radius: 5px;
+    border: 1px solid rgb(245, 216, 205);
+    outline: none;
+    padding: 0 0 0 3%;
+}
+
+.inputForm button{
+    width: 100%;
+    height: 70px;
+    border: 1px solid orangered;
+    border-radius: 8px;
+    color: white;
+    background-color: orangered;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.noAccount{
+    margin: 5% 0;
+    font-size: 16px;
+}
+
+.noAccount span{
+    font-weight: 800;
+    color: orangered;
+    cursor: pointer;
+}
+
+
+@media only screen and (max-width: 1100px) {
+    .loginContainer{
+        display: block;
+    }
+
+    .inputSection{
+        padding: 10% 0;
+    }
+
+    .inputSection header{
+        padding: 0 0 0 5%;
+    }
+
+    .inputForm{
+        width: 90%;
+        margin: 18% auto;
+    }
+
+    .loginImage{
+        display: none;
+    }
+
+    .signupImage{
+    display: none;
+    }
+    
+    .inputForm button{
+        height: 55px;
+    }
+}
