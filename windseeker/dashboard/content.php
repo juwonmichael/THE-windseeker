@@ -1,3 +1,6 @@
+<?php 
+include ("../BackendCode/conmanagement.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="../styles/content.css">
   <title>content</title>
+  
 </head>
 <body>
   <a href="../index.html" style="color: rgba(255, 255, 255, 0); text-decoration: none;">

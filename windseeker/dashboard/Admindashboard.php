@@ -1,3 +1,19 @@
+<?php 
+session_start();
+//echo $_SESSION ["Role"];
+if(isset ($_SESSION["Role"])&& $_SESSION["Role"]=="ADMIN"){
+
+
+}
+else
+{
+exit();
+}
+?>
+
+	
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,8 +36,8 @@
 			<h2>Admin Dashboard</h2>
 			<ul>
 				<li><a href="#">Dashboard</a></li>
-				<li><a href="../dashboard/usermanagement.html">User Management</a></li>
-				<li><a href="../dashboard/content.html">Content Management</a></li>
+				<li><a href="../dashboard/usermanagement.php">User Management</a></li>
+				<li><a href="../dashboard/content.php">Content Management</a></li>
 			</ul>
 		</div>
 		<div class="main-content">
@@ -40,3 +56,4 @@
     </footer>
 </body>
 </html>
+
