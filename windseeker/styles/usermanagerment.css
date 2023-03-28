@@ -1,5 +1,5 @@
 table {
-    border-collapse: collapse;
+    border-collapse:none;
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
@@ -35,7 +35,7 @@ table {
   }
   
   button {
-    background-color: #4CAF50;
+    background-color: hsla(315, 61%, 47%, 0.397);
     color: white;
     padding: 10px;
     border: none;
@@ -46,5 +46,8 @@ table {
   
   button:hover {
     background-color: #3e8e41;
+  }
+  footer{
+    display
   }
 

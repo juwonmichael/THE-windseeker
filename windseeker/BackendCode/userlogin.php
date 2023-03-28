@@ -19,9 +19,17 @@ if(isset($_POST['email'])) {
     if($password === $row['password']) {
     
       // login successful
-      $_SESSION['user_id'] = $row['id'];
+      $_SESSION['user_id'] = $row['userid'];
+      $_SESSION["Role"]= $row["Role"];
       $parent = "..";
-      header("Location: $parent/dashboard/dashboard.html");
+      if($row["Role"]=="ADMIN"){
+        header("Location: ../dashboard/Admindashboard.php");
+
+
+      }else{
+        header("Location: ../dashboard/dashboard.html");
+      }
+      
       exit();
     } else {
       // incorrect password

@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="../styles/usermanagerment.css">
     <title>Document</title>
 </head>
+<
 <body>
     <div class="dashboardContainer">
         <div class="dashboardSidenav">
@@ -53,8 +54,11 @@
 			<input type="email" name="email" required>
 			<label>Password:</label>
 			<input type="password" name="password" required>
+      <button>add_user<button>
+      
 
 
+          
             <footer>
                 <p>&copy; WINDSEEKER 2023</p>
             </footer>

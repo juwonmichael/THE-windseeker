@@ -1,24 +1,23 @@
 <?php
 session_start();
 require_once('connection.php'); // include database connection code
-
+if(session_start)
 // Add User
 if(isset($_POST['add_user'])) {
 	$name = $_POST['name'];
 	$email = $_POST['email'];
 	$password = $_POST['password'];
-	$role = $_POST['role'];
 	
-	// Hash the password
-	$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+	
+
 	
 
 	
 	// Prepare the SQL statement
-	$stmt = mysqli_prepare($conn, "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
+	$stmt = mysqli_prepare($conn, "INSERT INTO users (name, email, password, role) VALUES ('$name', '$email',  '$password')");
 	
 	// Bind the parameters
-	mysqli_stmt_bind_param($stmt, "ssss", $name, $email,);
+	mysqli_stmt_bind_param($stmt, "$password", $name, $email,);
 	
 	// Execute the statement
 	mysqli_stmt_execute($stmt);
@@ -28,7 +27,7 @@ if(isset($_POST['add_user'])) {
 	mysqli_close($conn);
 	
 	// Redirect to the admin page
-	header("Location: admin.php");
+	header("Location: usermanagement.php");
 	exit;
 }
 
@@ -40,15 +39,7 @@ if(isset($_POST['edit_user'])) {
 	$password = $_POST['password'];
 	$role = $_POST['role'];
 	
-	// Hash the password if it's not empty
-	if(!empty($password)) {
-		$hashed_password = password_hash($password, PASSWORD_DEFAULT);
-		$sql = "UPDATE users SET name = ?, email = ?, password = ?, role = ? WHERE id = ?";
-		$params = array($name, $email, $hashed_password, $role, $id);
-	} else {
-		$sql = "UPDATE users SET name = ?, email = ?, role = ? WHERE id = ?";
-		$params = array($name, $email, $role, $id);
-	}
+	
 	
 
     session_start();
@@ -69,7 +60,7 @@ require_once('connection.php'); // include database connection code
 	mysqli_close($conn);
 	
 	// Redirect to the admin page
-	header("Location: admin.php");
+	header("Location: Admindashboard.php");
 	exit;
 }
 
@@ -82,7 +73,7 @@ if(isset($_POST['delete_user'])) {
     
 	
 	// Prepare the SQL statement
-	$stmt = mysqli_prepare($conn, "DELETE FROM users WHERE id = ?");
+	$stmt = mysqli_prepare($conn, "DELETE FROM userinformation WHERE id = "userid");
 	
 	// Bind the parameter
 	mysqli_stmt_bind_param($stmt, "i", $id);
@@ -95,7 +86,7 @@ if(isset($_POST['delete_user'])) {
 	mysqli_close($conn);
 	
 	// Redirect to the admin page
-	header("Location: admin.php");
+	header("Location: "Admindashboard.php");
 	exit;
 }
 ?>
