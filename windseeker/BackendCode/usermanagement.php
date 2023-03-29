@@ -72,8 +72,8 @@ if(isset($_POST['delete_user'])) {
     require_once('connection.php'); // include database connection code
     
 	
-	// Prepare the SQL statement
-	$stmt = mysqli_prepare($conn, "DELETE FROM userinformation WHERE id = "userid");
+	// Prepare the SQL statements
+s	$stmt = mysqli_prepare($conn, "DELETE FROM userinformation WHERE id = "userid");
 	
 	// Bind the parameter
 	mysqli_stmt_bind_param($stmt, "i", $id);
@@ -85,7 +85,7 @@ if(isset($_POST['delete_user'])) {
 	mysqli_stmt_close($stmt);
 	mysqli_close($conn);
 	
-	// Redirect to the admin page
+	
 	header("Location: "Admindashboard.php");
 	exit;
 }
