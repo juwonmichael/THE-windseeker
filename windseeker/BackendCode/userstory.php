@@ -46,7 +46,7 @@ if(empty($_POST['title'])){
             create_story ($title,$content,$target_file);
             echo "file uploaded sucessfully ";
          }
-        }
+
  
 }
 
