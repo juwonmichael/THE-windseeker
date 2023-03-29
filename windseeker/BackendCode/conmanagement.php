@@ -3,7 +3,7 @@ session_start();
 require_once('connection.php'); // include database connection code
 
 
-// Retrieve the number of users
+// Retrieve the number of users from database
 $sql = "SELECT COUNT(*) as num_users FROM userinformation";
 $result = $conn->query($sql);
 $num_users = $result->fetch_assoc()["num_users"];

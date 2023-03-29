@@ -25,7 +25,7 @@ if(isset($_POST['email'])) {
       if($row["Role"]=="ADMIN"){
         header("Location: ../dashboard/Admindashboard.php");
 
-
+             //redirect to admindashboard
       }else{
         header("Location: ../dashboard/dashboard.html");
       }
