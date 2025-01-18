@@ -44,6 +44,19 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     needs: security-checks
+  name: CI/CD Pipeline 3
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  security-checks:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -52,6 +65,41 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+          cache: 'false'  # Disabled caching
+
+      - name: Initialize npm project if needed
+        run: |
+          if [ ! -f package.json ]; then
+            npm init -y
+          fi
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run npm audit (non-blocking)
+        run: npm audit --audit-level=high || echo "npm audit completed with warnings"
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.branch.name=${{ github.ref }}
+
+  build-and-test:
+    runs-on: ubuntu-latest
+    needs: security-checks
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'false'  # Disabled caching
 
       - name: Install dependencies
         run: npm install
@@ -107,4 +155,4 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG 
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
