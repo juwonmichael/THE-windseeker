@@ -1,8 +1,13 @@
-FROM nginx:1.27.3-alpine-slim
+FROM node:18-alpine
 
-WORKDIR /usr/share/php
-COPY  . .
+WORKDIR /app
 
-EXPOSE 80
+COPY package*.json ./
 
-CMD ["sh", "-c", "php-fpm & nginx -g 'daemon off;'"]
+RUN npm ci
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["npm", "start"] 
