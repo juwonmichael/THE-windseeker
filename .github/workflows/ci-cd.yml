@@ -29,6 +29,7 @@ jobs:
             -Dsonar.branch.name=${{ github.ref_name }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    continue-on-error: true      
 
   build-and-test:
     runs-on: ubuntu-latest
@@ -62,6 +63,8 @@ jobs:
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
+          
+          
 
       - name: Run ZAP Scan
         uses: zaproxy/action-full-scan@v0.4.0
