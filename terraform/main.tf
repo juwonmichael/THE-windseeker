@@ -13,7 +13,7 @@ resource "aws_ecr_repository" "app" {
 }
 
 # ECR Repository Policy
-resource "aws_ecr_repository_policy" "app_policy" {
+resource "aws_ecr_repository_policy" "app_policy2" {
   repository = aws_ecr_repository.app.name
   policy     = jsonencode({
     Version = "2012-10-17"
