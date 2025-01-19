@@ -1,4 +1,15 @@
- sonarcloud:
+name: CI/CD Pipeline 3
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  sonarcloud:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
