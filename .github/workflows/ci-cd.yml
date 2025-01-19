@@ -22,8 +22,8 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v4.1.0
         with:
           args: >
-            -Dsonar.projectKey=the-windseeker
-            -Dsonar.organization=the-windseeker
+            -Dsonar.projectKey=the-windseeker2
+            -Dsonar.organization=The_windseeker2
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.branch.name=${{ github.ref_name }}
