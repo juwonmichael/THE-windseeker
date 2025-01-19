@@ -1,4 +1,4 @@
-name: CI/CD Pipeline 5
+name: CI/CD Pipeline 6
 
 on:
   push:
