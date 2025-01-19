@@ -9,44 +9,28 @@ on:
       - main
 
 jobs:
-  security-checks:
+  sonarcloud:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      - name: Initialize npm project if needed
-        run: |
-          if [ ! -f package.json ]; then
-            npm init -y
-          fi
-
       - name: Install dependencies
         run: npm install
 
-      - name: Run npm audit (non-blocking)
-        run: npm audit --audit-level=high || echo "npm audit completed with warnings"
-
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Run SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v4.1.0
         with:
           args: >
             -Dsonar.projectKey=THE-windseeker
             -Dsonar.organization=YOUR_ORG_NAME
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.branch.name=${{ github.ref_name }}
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   build-and-test:
     runs-on: ubuntu-latest
-    needs: security-checks
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -88,6 +72,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-and-test
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
     environment:
       name: production
     steps:
