@@ -1,7 +1,10 @@
-name: CI/CD Pipeline
+name: CI/CD Pipeline 7
 
 on:
   push:
+    branches:
+      - main
+  pull_request:
     branches:
       - main
 
@@ -10,33 +13,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-        
-      - name: Cache Sonar Scanner
-        uses: actions/cache@v4.0.2
-        with:
-          path: ~/.sonar/cache
-          key: sonar-scanner-cli-6.2.1.4610-Linux-X64
-
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
+        uses: actions/checkout@v3
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
-      - name: SonarCloud Scan
+      - name: Run SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v4.1.0
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
             -Dsonar.projectKey=the-windseeker2
             -Dsonar.organization=The_windseeker2
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.branch.name=${{ github.ref_name }}
-      env:
+        env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     continue-on-error: true      
 
