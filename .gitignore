@@ -1,36 +1,32 @@
+<<<<<<< Updated upstream
 # Terraform files
 **/.terraform/*
+=======
+# Terraform
+.terraform
+>>>>>>> Stashed changes
 *.tfstate
 *.tfstate.*
 crash.log
-crash.*.log
-*.tfvars
-*.tfvars.json
-override.tf
-override.tf.json
-*_override.tf
-*_override.tf.json
 .terraformrc
 terraform.rc
+.terraform.lock.hcl
 
-# Node modules
+# Node
 node_modules/
-
-# Environment variables
+npm-debug.log
 .env
-.env.*
 
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# IDE files
-.idea/
+# IDE
 .vscode/
+.idea/
 *.swp
+<<<<<<< Updated upstream
 *.swo terraform/*.tfstate*
+=======
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+>>>>>>> Stashed changes
