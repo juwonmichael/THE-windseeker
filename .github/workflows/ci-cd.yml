@@ -4,25 +4,21 @@ on: workflow_dispatch
   
 
 jobs:
-  sonarcloud:
+  sonar-scan:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run SonarQube Scan
-        run: |
-         sonar-scanner \
-         -Dsonar.organization=the-windseeker2 \
-         -Dsonar.projectKey=the-windseeker2 \
-         -Dsonar.sources=. \
-         -Dsonar.host.url=https://sonarcloud.io
-    env:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    continue-on-error: true
+      - name: Run SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2
+        with:
+          args: >
+            -Dsonar.organization=the-windseeker2
+            -Dsonar.projectKey=the-windseeker2
+            -Dsonar.sources=.
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   build-and-test:
     runs-on: ubuntu-latest
