@@ -1,12 +1,7 @@
 name: CI/CD Pipeline 8
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+on: workflow_dispatch
+  
 
 jobs:
   sonarcloud:
@@ -19,16 +14,15 @@ jobs:
         run: npm install
 
       - name: Run SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v4.1.0
-        with:
-          args: >
-            -Dsonar.projectKey=the-windseeker2
-            -Dsonar.organization=The_windseeker2
-            -Dsonar.host.url=https://sonarcloud.io
-            -Dsonar.branch.name=${{ github.ref_name }}
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    continue-on-error: true      
+        run: |
+         sonar-scanner \
+         -Dsonar.organization=the-windseeker2 \
+         -Dsonar.projectKey=the-windseeker2 \
+         -Dsonar.sources=. \
+         -Dsonar.host.url=https://sonarcloud.io
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    continue-on-error: true
 
   build-and-test:
     runs-on: ubuntu-latest
