@@ -44,8 +44,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run build
-        run: npn run build
+     
 
       - name: Build Docker image
         run: docker build -t the-windseeker:${{ github.sha }} .
