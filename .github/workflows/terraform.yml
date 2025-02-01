@@ -1,8 +1,6 @@
-name: Terraform CI/CD 3
+ame: Terraform CI/CD 3
 
 on: workflow_dispatch
- 
-
 
 jobs:
   terraform:
@@ -10,6 +8,7 @@ jobs:
     defaults:
       run:
         working-directory: ./terraform
+    
     steps:
       - uses: actions/checkout@v3
 
@@ -19,13 +18,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-2
-
-  build:
-    name: IaC Scan
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
 
       - name: Run Trivy vulnerability scanner in fs mode
         uses: aquasecurity/trivy-action@master
@@ -43,22 +35,13 @@ jobs:
           terraform_version: 1.0.0
 
       - name: Terraform Init
-        run: cd terraform && terraform init
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
+        run: terraform init
 
       - name: Terraform Format
         run: terraform fmt -check
 
       - name: Terraform Plan
-        run: cd terraform && terraform plan
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-      
+        run: terraform plan
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
