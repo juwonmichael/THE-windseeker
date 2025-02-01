@@ -1,14 +1,8 @@
 name: Terraform CI/CD 2
 
-on:
-  push:
-    branches: [ main ]
-    paths:
-      - 'terraform/**'
-  pull_request:
-    branches: [ main ]
-    paths:
-      - 'terraform/**'
+on: workflow_dispatch
+ 
+
 
 jobs:
   terraform:
@@ -56,8 +50,7 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan
-        if: github.event_name == 'pull_request'
+      
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve
