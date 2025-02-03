@@ -1,7 +1,7 @@
 name: CI/CD Pipeline 10
 
-on:
-  workflow_dispatch:
+on: workflow_dispatch
+  
 
 jobs:
   sonar-scan:
@@ -34,55 +34,37 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      
+     
 
       - name: Build Docker image
-        run: |
-          docker build -t ${{ secrets.DOCKER_REGISTRY }}/the-windseeker:${{ github.sha }} .
-      
-      - name: Push Docker image to registry
-        run: |
-          docker push ${{ secrets.DOCKER_REGISTRY }}/the-windseeker:${{ github.sha }}
+        run: docker build -t the-windseeker:${{ github.sha }} .
+
+      - name: Run Docker container
+        run: docker run -d -p 3000:3000 the-windseeker:${{ github.sha }}
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: '${{ secrets.DOCKER_REGISTRY }}/the-windseeker:${{ github.sha }}'
+          image-ref: 'the-windseeker:${{ github.sha }}'
           format: 'table'
           exit-code: '0'
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
+          
+          
 
-  deploy-staging:
-    runs-on: ubuntu-latest
-    needs: build-and-test
-    environment:
-      name: staging
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Pull Docker image for staging
-        run: |
-          docker pull ${{ secrets.DOCKER_REGISTRY }}/the-windseeker:${{ github.sha }}
-
-      - name: Deploy to Staging
-        run: |
-          docker run -d -p 3000:3000 ${{ secrets.DOCKER_REGISTRY }}/the-windseeker:${{ github.sha }}
-
-      - name: Wait for the application to be ready
-        run: sleep 20
-
-      - name: Run DAST scan with OWASP ZAP
+      - name: Run ZAP Scan
         uses: zaproxy/action-full-scan@v0.4.0
         with:
-          target: http://localhost:3000
+          target: 'http://localhost:3000'
+          cmd_options: '-a'
 
-  deploy-production:
+  deploy:
     runs-on: ubuntu-latest
-    needs: deploy-staging
+    needs: build-and-test
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
     environment:
       name: production
     steps:
@@ -97,11 +79,9 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build and push Docker image to ECR
+      - name: Build and push Docker image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: the-windseeker
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
