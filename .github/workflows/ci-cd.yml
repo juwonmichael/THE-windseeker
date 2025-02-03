@@ -37,17 +37,17 @@ jobs:
       
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_REGISTRY }}/the-windseeker:${{ github.sha }} .
+          docker build -t ${{ secrets.docker_registry }}/the-windseeker:${{ github.sha }} .
 
       # Push the image to Docker Hub (or your configured registry)
       - name: Push Docker image to registry
         run: |
-          docker push ${{ secrets.DOCKER_REGISTRY }}/the-windseeker:${{ github.sha }}
+          docker push ${{ secrets.docker_registry }}/the-windseeker:${{ github.sha }}
 
       # Optionally run the container locally to test it
       - name: Run Docker container
         run: |
-          docker run -d -p 3000:3000 ${{ secrets.DOCKER_REGISTRY }}/the-windseeker:${{ github.sha }}
+          docker run -d -p 3000:3000 ${{ secrets.docker_registry }}/the-windseeker:${{ github.sha }}
 
 
       - name: Run Trivy vulnerability scanner
@@ -71,11 +71,11 @@ jobs:
 
       - name: Pull Docker image for staging
         run: |
-          docker pull ${{ secrets.DOCKER_REGISTRY }}/the-windseeker:${{ github.sha }}
+          docker pull ${{ secrets.docker_registry}}/the-windseeker:${{ github.sha }}
 
       - name: Deploy to Staging
         run: |
-          docker run -d -p 3000:3000 ${{ secrets.DOCKER_REGISTRY }}/the-windseeker:${{ github.sha }}
+          docker run -d -p 3000:3000 ${{ secrets.docker_registry }}/the-windseeker:${{ github.sha }}
 
       - name: Wait for the application to be ready
         run: sleep 20
