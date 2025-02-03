@@ -36,8 +36,7 @@ jobs:
 
       
       - name: Build Docker image
-        run: |
-          docker build -t ${{ secrets.docker_registry }}/the-windseeker:${{ github.sha }} .
+        run: docker build -t $(echo "${{ secrets.docker_registry }}/the-windseeker:${{ github.sha }}" | tr '[:upper:]' '[:lower:]') .
 
       # Push the image to Docker Hub (or your configured registry)
       - name: Push Docker image to registry
