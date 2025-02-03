@@ -34,25 +34,27 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      
       - name: Build Docker image
-        run: docker build -t $(echo "${{ secrets.docker_registry }}/the-windseeker:${{ github.sha }}" | tr '[:upper:]' '[:lower:]') .
+        run: |
+          DOCKER_TAG=$(echo "${{ secrets.docker_registry }}/the-windseeker:${{ github.sha }}" | tr '[:upper:]' '[:lower:]')
+          echo "Using Docker Tag: $DOCKER_TAG"
+          docker build -t $DOCKER_TAG .
 
-      # Push the image to Docker Hub (or your configured registry)
       - name: Push Docker image to registry
         run: |
-          docker push ${{ secrets.docker_registry }}/the-windseeker:${{ github.sha }}
+          DOCKER_TAG=$(echo "${{ secrets.docker_registry }}/the-windseeker:${{ github.sha }}" | tr '[:upper:]' '[:lower:]')
+          echo "Pushing Docker Tag: $DOCKER_TAG"
+          docker push $DOCKER_TAG
 
-      # Optionally run the container locally to test it
       - name: Run Docker container
         run: |
-          docker run -d -p 3000:3000 ${{ secrets.docker_registry }}/the-windseeker:${{ github.sha }}
-
+          DOCKER_TAG=$(echo "${{ secrets.docker_registry }}/the-windseeker:${{ github.sha }}" | tr '[:upper:]' '[:lower:]')
+          docker run -d -p 3000:3000 $DOCKER_TAG
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'the-windseeker:${{ github.sha }}'
+          image-ref: "the-windseeker:${{ github.sha }}"
           format: 'table'
           exit-code: '0'
           ignore-unfixed: true
@@ -70,11 +72,13 @@ jobs:
 
       - name: Pull Docker image for staging
         run: |
-          docker pull ${{ secrets.docker_registry}}/the-windseeker:${{ github.sha }}
+          DOCKER_TAG=$(echo "${{ secrets.docker_registry }}/the-windseeker:${{ github.sha }}" | tr '[:upper:]' '[:lower:]')
+          docker pull $DOCKER_TAG
 
       - name: Deploy to Staging
         run: |
-          docker run -d -p 3000:3000 ${{ secrets.docker_registry }}/the-windseeker:${{ github.sha }}
+          DOCKER_TAG=$(echo "${{ secrets.docker_registry }}/the-windseeker:${{ github.sha }}" | tr '[:upper:]' '[:lower:]')
+          docker run -d -p 3000:3000 $DOCKER_TAG
 
       - name: Wait for the application to be ready
         run: sleep 20
@@ -108,3 +112,4 @@ jobs:
           ECR_REPOSITORY: the-windseeker
           IMAGE_TAG: ${{ github.sha }}
         run: echo "deployment completed"
+
