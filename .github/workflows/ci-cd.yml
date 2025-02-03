@@ -37,17 +37,16 @@ jobs:
       
 
       - name: Build Docker image
-        run: |
-          docker build -t ${{ secrets.DOCKER_REGISTRY }}/the-windseeker:${{ github.sha }} .
-      
-      - name: Push Docker image to registry
-        run: |
-          docker push ${{ secrets.DOCKER_REGISTRY }}/the-windseeker:${{ github.sha }}
+        run: docker build -t the-windseeker:${{ github.sha }} .
+
+      - name: Run Docker container
+        run: docker run -d -p 3000:3000 the-windseeker:${{ github.sha }}
+
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: '${{ secrets.DOCKER_REGISTRY }}/the-windseeker:${{ github.sha }}'
+          image-ref: 'the-windseeker:${{ github.sha }}'
           format: 'table'
           exit-code: '0'
           ignore-unfixed: true
