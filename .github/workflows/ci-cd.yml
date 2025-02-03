@@ -40,6 +40,9 @@ jobs:
           echo "Using Docker Tag: $DOCKER_TAG"
           docker build -t $DOCKER_TAG .
 
+      - name: Docker Login
+        run: echo ${{ secrets.docker_registry }} | docker login docker.io -u ${{ secrets.docker_hub_username }} --password-stdin
+
       - name: Push Docker image to registry
         run: |
           DOCKER_TAG=$(echo "${{ secrets.docker_registry }}/the-windseeker:${{ github.sha }}" | tr '[:upper:]' '[:lower:]')
