@@ -41,7 +41,7 @@ jobs:
           docker build -t $DOCKER_TAG .
 
       - name: Debug Docker Username
-        run: echo "Docker Hub Username is '${{ DOCKER_HUB_USERNAME }}'"
+        run: echo "Docker Hub Username is '${{ secret.DOCKER_HUB_USERNAME }}'"
 
         
 
