@@ -40,9 +40,10 @@ jobs:
           echo "Using Docker Tag: $DOCKER_TAG"
           docker build -t $DOCKER_TAG .
 
-      - name: Debug Docker Username
-        run: echo "Docker Hub Username is '${{ secret.DOCKER_HUB_USERNAME }}'"
-
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login docker.io -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
+        env:
+          DOCKER_HUB_ACCESS_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
         
 
       - name: Push Docker image to registry
@@ -117,4 +118,3 @@ jobs:
           ECR_REPOSITORY: the-windseeker
           IMAGE_TAG: ${{ github.sha }}
         run: echo "deployment completed"
-
