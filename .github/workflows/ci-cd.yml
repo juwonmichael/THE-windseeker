@@ -40,8 +40,9 @@ jobs:
           echo "Using Docker Tag: $DOCKER_TAG"
           docker build -t $DOCKER_TAG .
 
-      - name: Log in to Docker Hub
-        run: echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login docker.io -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
+      - name: Debug Docker Username
+        run: echo "Docker Hub Username is '${{ secrets.DOCKER_HUB_USERNAME }}'"
+
         
 
       - name: Push Docker image to registry
