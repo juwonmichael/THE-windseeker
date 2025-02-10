@@ -39,6 +39,7 @@ jobs:
           DOCKER_TAG=$(echo "${{ secrets.docker_registry }}/the-windseeker:${{ github.sha }}" | tr '[:upper:]' '[:lower:]')
           echo "Using Docker Tag: $DOCKER_TAG"
           docker build -t $DOCKER_TAG .
+      
 
           - name: Docker Login
           uses: docker/login-action@v1
